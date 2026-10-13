@@ -1522,6 +1522,7 @@ body.modal-open {
 
   .hero-metrics span {
     font-size: 0.76rem;
+    line-height: 1.45;
   }
 
   .preview-hero {
@@ -1686,6 +1687,20 @@ body.modal-open {
   }
 
   .hero-metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .hero-metrics li {
+    padding-top: 0.75rem;
+  }
+
+  .hero-metrics strong {
+    font-size: 1.45rem;
+  }
+
+  .hero-metrics span {
+    font-size: 0.68rem;
+    line-height: 1.35;
   }
 }
