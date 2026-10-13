@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .map((file) => {
         const title = titleFromFile(file);
         return `
-          <figure class="certificate-item reveal" data-title="${title}" data-image="assets/${file}">
+          <figure class="certificate-item" data-title="${title}" data-image="assets/${file}">
             <img src="assets/${file}" alt="${title}" loading="lazy" />
             <figcaption>${title}</figcaption>
           </figure>
@@ -96,10 +96,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const slides = [...certificateTrack.querySelectorAll('.certificate-item')];
     let activeIndex = 0;
     let autoSlideId = null;
+    const loadVisibleCertificates = () => {
+      const trackBounds = certificateTrack.getBoundingClientRect();
+      slides.forEach((slide) => {
+        const slideBounds = slide.getBoundingClientRect();
+        if (slideBounds.right > trackBounds.left && slideBounds.left < trackBounds.right) {
+          const image = slide.querySelector('img');
+          if (image) image.loading = 'eager';
+        }
+      });
+    };
 
     const goToSlide = (index) => {
       const safeIndex = (index + slides.length) % slides.length;
       activeIndex = safeIndex;
+      [0, 1, 2].forEach((offset) => {
+        const image = slides[(safeIndex + offset) % slides.length].querySelector('img');
+        if (image) image.loading = 'eager';
+      });
 
       const slideWidth = slides[0]?.getBoundingClientRect().width || 0;
       const gap = 16;
@@ -110,6 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
         dot.classList.toggle('is-active', dotIndex === safeIndex);
       });
     };
+
+    certificateTrack.addEventListener('scroll', loadVisibleCertificates, { passive: true });
+    loadVisibleCertificates();
 
     const startAutoSlide = () => {
       if (autoSlideId) window.clearInterval(autoSlideId);
