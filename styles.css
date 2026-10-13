@@ -909,6 +909,33 @@ a {
   font-size: 1.02rem;
 }
 
+.education-card {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1.5rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid rgba(142, 197, 255, 0.2);
+  border-radius: 18px;
+  background: rgba(142, 197, 255, 0.06);
+}
+
+.education-label {
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.education-card strong {
+  font-size: 1rem;
+}
+
+.education-card > span:last-child {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .skill-list {
   display: flex;
   flex-wrap: wrap;
