@@ -123,6 +123,15 @@ document.addEventListener('DOMContentLoaded', () => {
       dots.forEach((dot, dotIndex) => {
         dot.classList.toggle('is-active', dotIndex === safeIndex);
       });
+      if (certificateDotsEl.scrollWidth > certificateDotsEl.clientWidth) {
+        const activeDot = dots[safeIndex];
+        const dotWidth = activeDot?.getBoundingClientRect().width || 0;
+        const dotGap = Number.parseFloat(getComputedStyle(certificateDotsEl).columnGap) || 0;
+        certificateDotsEl.scrollTo({
+          left: Math.max(0, activeIndex * (dotWidth + dotGap) - (certificateDotsEl.clientWidth - dotWidth) / 2),
+          behavior: 'smooth'
+        });
+      }
     };
 
     certificateTrack.addEventListener('scroll', loadVisibleCertificates, { passive: true });
